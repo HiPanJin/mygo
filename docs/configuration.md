@@ -62,7 +62,7 @@ the fields of [the frontend](#development-and-the-frontend).
 | `buildCommand` | | builds the frontend before `mygo build` compiles the app |
 | `frontendDist` | | the directory of the built frontend, which `mygo build` embeds into the app; `mygo dev` serves it from disk when there is no `devUrl` |
 | `bindings` | `frontend/src/mygo.ts` when `frontend/package.json` depends on `mygo-runtime`, else `src/mygo.ts` when package.json at the root does, else `mygo.ts` when the configuration has a frontend (`devUrl`, `devCommand`, `buildCommand` or `frontendDist`); none for an app without one, such as one of [native UI](ui/README.md) | where `mygo generate` writes the TypeScript client |
-| `out` | `dist` | where `mygo build` writes the builds, one directory per platform |
+| `out` | `dist` | where `mygo build` writes the builds, one directory per platform; must be outside the `resources` directory and any directories listed in `resources` |
 
 See [the frontend](frontend.md#how-pages-load) for how they fit together.
 New projects set `out` to `build`, apart from Vite's `dist`.

@@ -147,8 +147,8 @@ func compileWeb(ctx context.Context, c *Config, t *task, out string, debug bool,
 // page, Go's loader, the app's WebAssembly named by its content, which
 // browsers may keep for good, and the app's icon. It returns the files.
 func buildWeb(c *Config, opts buildOptions) ([]string, error) {
-	out := c.path(c.Out)
-	if err := os.MkdirAll(out, 0o755); err != nil {
+	out, err := c.buildOutputDir()
+	if err != nil {
 		return nil, err
 	}
 	stage, err := os.MkdirTemp(out, ".staging-web-")

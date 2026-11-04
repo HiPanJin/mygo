@@ -201,8 +201,8 @@ func buildSummary(c *Config, artifacts []string, took time.Duration) string {
 // in a staging directory that then replaces the platform directory, so a
 // failed build keeps the previous one and nothing stale remains.
 func buildPlatform(c *Config, goos, goarch string, opts buildOptions) ([]string, error) {
-	out := c.path(c.Out)
-	if err := os.MkdirAll(out, 0o755); err != nil {
+	out, err := c.buildOutputDir()
+	if err != nil {
 		return nil, err
 	}
 	stage, err := os.MkdirTemp(out, ".staging-"+goos+"-"+goarch+"-")

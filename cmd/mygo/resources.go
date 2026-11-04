@@ -789,6 +789,22 @@ func hashResources(w io.Writer, list []resource) error {
 	return nil
 }
 
+// buildOutputDir prepares an output directory outside the resource inputs.
+// Otherwise a later build can discover the previous output as resources.
+func (c *Config) buildOutputDir() (string, error) {
+	out := c.path(c.Out)
+	if err := os.MkdirAll(out, 0o755); err != nil {
+		return "", err
+	}
+	for _, name := range append([]string{resourcesDir}, c.Resources...) {
+		input := c.path(name)
+		if isDir(input) && within(out, input) {
+			return "", fmt.Errorf("build output %s is inside resource directory %s; choose an output directory outside the resources", out, input)
+		}
+	}
+	return out, nil
+}
+
 // within reports whether path is dir or inside it.
 func within(path, dir string) bool {
 	resolve := func(p string) string {
