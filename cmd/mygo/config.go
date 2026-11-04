@@ -295,7 +295,7 @@ func (c *Config) validate() error {
 		if fa.MimeType != "" {
 			mediaType, params, err := mime.ParseMediaType(fa.MimeType)
 			if err != nil || !strings.Contains(mediaType, "/") || len(params) != 0 || strings.ContainsAny(fa.MimeType, ";\r\n") {
-				return fmt.Errorf("fileAssociations[%d].mimeType %q must be a MIME type without parameters", i, fa.MimeType)
+				return fmt.Errorf("fileAssociations[%d].mimeType %q is not a MIME type (type/subtype, as text/markdown, without parameters)", i, fa.MimeType)
 			}
 			c.FileAssociations[i].MimeType = mediaType
 		}
